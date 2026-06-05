@@ -1,0 +1,67 @@
+{
+  "pages": [
+    "pages/auth/login/index",
+    "pages/auth/register/index",
+    "pages/home/index/index",
+    "pages/info/list/index",
+    "pages/info/detail/index",
+    "pages/service/index/index",
+    "pages/service/create/index",
+    "pages/service/detail/index",
+    "pages/health/index/index",
+    "pages/health/create/index",
+    "pages/emergency/index/index",
+    "pages/emergency/create/index",
+    "pages/emergency/detail/index",
+    "pages/message/index/index",
+    "pages/message/detail/index",
+    "pages/profile/index/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "社区养老服务",
+    "navigationBarBackgroundColor": "#f5f8fb",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#eef3f8",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#6b7b8c",
+    "selectedColor": "#1c75bc",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/index/index",
+        "text": "首页",
+        "iconPath": "assets/tabbar/home.png",
+        "selectedIconPath": "assets/tabbar/home-active.png"
+      },
+      {
+        "pagePath": "pages/service/index/index",
+        "text": "服务",
+        "iconPath": "assets/tabbar/service.png",
+        "selectedIconPath": "assets/tabbar/service-active.png"
+      },
+      {
+        "pagePath": "pages/health/index/index",
+        "text": "健康",
+        "iconPath": "assets/tabbar/health.png",
+        "selectedIconPath": "assets/tabbar/health-active.png"
+      },
+      {
+        "pagePath": "pages/message/index/index",
+        "text": "消息",
+        "iconPath": "assets/tabbar/message.png",
+        "selectedIconPath": "assets/tabbar/message-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index/index",
+        "text": "我的",
+        "iconPath": "assets/tabbar/profile.png",
+        "selectedIconPath": "assets/tabbar/profile-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

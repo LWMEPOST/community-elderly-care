@@ -1,0 +1,51 @@
+<view class="page">
+  <view class="hero-card" wx:if="{{detail}}">
+    <view class="hero-title">{{detail.helpTypeText}}</view>
+    <view class="hero-text">{{detail.statusLabel}} · {{detail.createTimeText}}</view>
+  </view>
+
+  <view class="section panel" wx:if="{{detail}}">
+    <view class="panel-title">求助详情</view>
+    <view class="card-list">
+      <view class="list-card">
+        <view class="list-title">老人</view>
+        <view class="list-meta">{{detail.elderlyName || '--'}}</view>
+      </view>
+      <view class="list-card">
+        <view class="list-title">位置</view>
+        <view class="list-meta">{{detail.locationAddress || '未填写'}}</view>
+      </view>
+      <view class="list-card">
+        <view class="list-title">响应人员</view>
+        <view class="list-meta">{{detail.responseUserName || '待响应'}}</view>
+      </view>
+      <view class="list-card">
+        <view class="list-title">求助描述</view>
+        <view class="list-meta">{{detail.description || '暂无描述'}}</view>
+      </view>
+      <view class="list-card">
+        <view class="list-title">解决时间</view>
+        <view class="list-meta">{{detail.resolveTimeText}}</view>
+      </view>
+    </view>
+
+    <view class="actions">
+      <button
+        wx:if="{{currentUser.userType === 4 && detail.status === 1}}"
+        class="button-primary"
+        data-action="respond"
+        bindtap="handleAction"
+      >
+        响应求助
+      </button>
+      <button
+        wx:if="{{currentUser.userType === 4 && detail.status === 2}}"
+        class="button-danger"
+        data-action="resolve"
+        bindtap="handleAction"
+      >
+        标记已解决
+      </button>
+    </view>
+  </view>
+</view>

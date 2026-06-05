@@ -1,0 +1,48 @@
+<view class="page">
+  <view class="hero-card">
+    <view class="hero-title">发起求助</view>
+    <view class="hero-text">填写求助类型、位置和描述，便于服务人员快速响应。</view>
+  </view>
+
+  <view class="section panel">
+    <view class="form-grid">
+      <view>
+        <text class="field-label">求助类型</text>
+        <picker mode="selector" range="{{helpTypes}}" range-key="label" value="{{helpTypeIndex}}" bindchange="onHelpTypeChange">
+          <view class="picker-field">{{helpTypes[helpTypeIndex].label}}</view>
+        </picker>
+      </view>
+
+      <view wx:if="{{currentUser.userType === 2}}">
+        <text class="field-label">绑定老人</text>
+        <picker mode="selector" range="{{bindings}}" range-key="elderlyName" value="{{bindingIndex}}" bindchange="onBindingChange">
+          <view class="picker-field">{{bindings.length ? bindings[bindingIndex].elderlyName : '暂无已确认绑定'}}</view>
+        </picker>
+      </view>
+
+      <view>
+        <text class="field-label">位置地址</text>
+        <input class="field" data-field="locationAddress" value="{{locationAddress}}" bindinput="onFieldInput" placeholder="请输入位置描述" />
+      </view>
+
+      <view>
+        <text class="field-label">经度</text>
+        <input class="field" type="digit" data-field="longitude" value="{{longitude}}" bindinput="onFieldInput" placeholder="可选" />
+      </view>
+
+      <view>
+        <text class="field-label">纬度</text>
+        <input class="field" type="digit" data-field="latitude" value="{{latitude}}" bindinput="onFieldInput" placeholder="可选" />
+      </view>
+
+      <view>
+        <text class="field-label">求助描述</text>
+        <textarea class="textarea" data-field="description" value="{{description}}" bindinput="onFieldInput" placeholder="补充现场情况和需求" />
+      </view>
+    </view>
+
+    <view class="actions">
+      <button class="button-primary" loading="{{submitting}}" bindtap="handleSubmit">提交求助</button>
+    </view>
+  </view>
+</view>

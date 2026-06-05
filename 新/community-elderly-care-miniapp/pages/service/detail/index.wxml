@@ -1,0 +1,71 @@
+<view class="page">
+  <view class="hero-card" wx:if="{{detail}}">
+    <view class="hero-title">{{detail.serviceItemName || '服务订单'}}</view>
+    <view class="hero-text">{{detail.statusLabel}} · {{detail.appointmentText}}</view>
+  </view>
+
+  <view class="section panel" wx:if="{{detail}}">
+    <view class="panel-title">订单信息</view>
+    <view class="card-list">
+      <view class="list-card">
+        <view class="list-title">订单号</view>
+        <view class="list-meta">{{detail.orderNo}}</view>
+      </view>
+      <view class="list-card">
+        <view class="list-title">服务对象</view>
+        <view class="list-meta">{{detail.elderlyName || '--'}}</view>
+      </view>
+      <view class="list-card">
+        <view class="list-title">服务人员</view>
+        <view class="list-meta">{{detail.serviceUserName || '待派单'}}</view>
+      </view>
+      <view class="list-card">
+        <view class="list-title">服务费用</view>
+        <view class="list-meta">{{detail.priceText}} · {{detail.serviceDuration || '--'}} 分钟</view>
+      </view>
+      <view class="list-card">
+        <view class="list-title">服务地址</view>
+        <view class="list-meta">{{detail.serviceAddress || '--'}}</view>
+      </view>
+      <view class="list-card">
+        <view class="list-title">备注</view>
+        <view class="list-meta">{{detail.remark || '无备注'}}</view>
+      </view>
+    </view>
+
+    <view class="actions">
+      <button
+        wx:if="{{currentUser.userType === 4 && detail.status === 1}}"
+        class="button-primary"
+        data-action="accept"
+        bindtap="handleAction"
+      >
+        接单
+      </button>
+      <button
+        wx:if="{{currentUser.userType === 4 && detail.status === 2}}"
+        class="button-primary"
+        data-action="start"
+        bindtap="handleAction"
+      >
+        开始服务
+      </button>
+      <button
+        wx:if="{{currentUser.userType === 4 && detail.status === 3}}"
+        class="button-primary"
+        data-action="complete"
+        bindtap="handleAction"
+      >
+        完成服务
+      </button>
+      <button
+        wx:if="{{currentUser.userType !== 4 && detail.status !== 4 && detail.status !== 5}}"
+        class="button-danger"
+        data-action="cancel"
+        bindtap="handleAction"
+      >
+        取消订单
+      </button>
+    </view>
+  </view>
+</view>

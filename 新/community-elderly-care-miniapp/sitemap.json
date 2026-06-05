@@ -1,0 +1,9 @@
+{
+  "desc": "社区养老服务小程序 sitemap",
+  "rules": [
+    {
+      "action": "allow",
+      "page": "*"
+    }
+  ]
+}

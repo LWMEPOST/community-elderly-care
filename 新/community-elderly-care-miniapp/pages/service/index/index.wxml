@@ -1,0 +1,96 @@
+<view class="page">
+  <view class="hero-card">
+    <view class="hero-title">服务中心</view>
+    <view class="hero-text">
+      当前身份：{{roleLabel}}。{{currentUser.userType === 4 ? '查看并处理自己的服务工单。' : '浏览服务分类、预约服务并追踪订单进度。'}}
+    </view>
+  </view>
+
+  <view class="section panel">
+    <view class="tabs">
+      <view class="tab {{currentTab === 'catalog' ? 'tab-active' : ''}}" data-tab="catalog" bindtap="switchTab">
+        服务目录
+      </view>
+      <view class="tab {{currentTab === 'orders' ? 'tab-active' : ''}}" data-tab="orders" bindtap="switchTab">
+        {{currentUser.userType === 4 ? '我的工单' : '我的订单'}}
+      </view>
+    </view>
+  </view>
+
+  <view class="section panel" wx:if="{{currentTab === 'catalog'}}">
+    <view class="row-between">
+      <view>
+        <view class="panel-title">服务目录</view>
+        <view class="panel-desc">查看社区可预约的服务分类与项目。</view>
+      </view>
+      <button wx:if="{{currentUser.userType !== 4}}" class="button-primary" bindtap="openCreate">去预约</button>
+    </view>
+
+    <view wx:if="{{categories.length}}" class="section">
+      <text class="field-label">服务分类</text>
+      <picker mode="selector" range="{{categories}}" range-key="name" value="{{categoryIndex}}" bindchange="onCategoryChange">
+        <view class="picker-field">{{categories[categoryIndex].name}}</view>
+      </picker>
+    </view>
+
+    <view class="card-list">
+      <view wx:for="{{items}}" wx:key="id" class="list-card">
+        <view class="list-title">{{item.name}}</view>
+        <view class="list-meta">{{item.description || '暂无描述'}}</view>
+        <view class="list-meta">{{item.priceText}} · {{item.durationText}}</view>
+      </view>
+      <view wx:if="{{!items.length}}" class="empty">当前分类暂无服务项目</view>
+    </view>
+  </view>
+
+  <view class="section panel" wx:if="{{currentTab === 'orders'}}">
+    <view class="panel-title">{{currentUser.userType === 4 ? '我的工单' : '我的订单'}}</view>
+    <view class="card-list">
+      <view wx:for="{{orders}}" wx:key="id" class="list-card">
+        <view class="list-title">{{item.serviceItemName || '服务订单'}} · {{item.statusLabel}}</view>
+        <view class="list-meta">{{item.elderlyName || '--'}} · {{item.appointmentText}}</view>
+        <view class="list-meta">{{item.serviceAddress || '地址待补充'}}</view>
+        <view class="actions">
+          <button class="button-secondary" data-id="{{item.id}}" bindtap="openDetail">详情</button>
+          <button
+            wx:if="{{currentUser.userType === 4 && item.status === 1}}"
+            class="button-primary"
+            data-id="{{item.id}}"
+            data-action="accept"
+            bindtap="handleOrderAction"
+          >
+            接单
+          </button>
+          <button
+            wx:if="{{currentUser.userType === 4 && item.status === 2}}"
+            class="button-primary"
+            data-id="{{item.id}}"
+            data-action="start"
+            bindtap="handleOrderAction"
+          >
+            开始服务
+          </button>
+          <button
+            wx:if="{{currentUser.userType === 4 && item.status === 3}}"
+            class="button-primary"
+            data-id="{{item.id}}"
+            data-action="complete"
+            bindtap="handleOrderAction"
+          >
+            完成
+          </button>
+          <button
+            wx:if="{{currentUser.userType !== 4 && item.status !== 4 && item.status !== 5}}"
+            class="button-danger"
+            data-id="{{item.id}}"
+            data-action="cancel"
+            bindtap="handleOrderAction"
+          >
+            取消
+          </button>
+        </view>
+      </view>
+      <view wx:if="{{!orders.length}}" class="empty">暂无服务订单</view>
+    </view>
+  </view>
+</view>

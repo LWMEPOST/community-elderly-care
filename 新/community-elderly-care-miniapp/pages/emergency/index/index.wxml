@@ -1,0 +1,48 @@
+<view class="page">
+  <view class="hero-card">
+    <view class="hero-title">紧急求助</view>
+    <view class="hero-text">
+      当前身份：{{roleLabel}}。{{currentUser.userType === 4 ? '查看并处理需要响应的求助工单。' : '发起求助并跟进处理进展。'}}
+    </view>
+  </view>
+
+  <view class="section panel">
+    <view class="row-between">
+      <view>
+        <view class="panel-title">求助列表</view>
+        <view class="panel-desc">查看求助进展和处理状态。</view>
+      </view>
+      <button wx:if="{{currentUser.userType !== 4}}" class="button-primary" bindtap="openCreate">发起求助</button>
+    </view>
+
+    <view class="card-list">
+      <view wx:for="{{list}}" wx:key="id" class="list-card">
+        <view class="list-title">{{item.helpTypeText}} · {{item.statusLabel}}</view>
+        <view class="list-meta">{{item.elderlyName || '--'}} · {{item.createTimeText}}</view>
+        <view class="list-meta">{{item.locationAddress || '未填写位置'}}</view>
+        <view class="actions">
+          <button class="button-secondary" data-id="{{item.id}}" bindtap="openDetail">详情</button>
+          <button
+            wx:if="{{currentUser.userType === 4 && item.status === 1}}"
+            class="button-primary"
+            data-id="{{item.id}}"
+            data-action="respond"
+            bindtap="handleAction"
+          >
+            响应
+          </button>
+          <button
+            wx:if="{{currentUser.userType === 4 && item.status === 2}}"
+            class="button-danger"
+            data-id="{{item.id}}"
+            data-action="resolve"
+            bindtap="handleAction"
+          >
+            解决
+          </button>
+        </view>
+      </view>
+      <view wx:if="{{!list.length}}" class="empty">暂无求助记录</view>
+    </view>
+  </view>
+</view>

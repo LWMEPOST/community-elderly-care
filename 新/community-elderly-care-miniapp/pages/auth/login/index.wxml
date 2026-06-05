@@ -1,0 +1,74 @@
+<view class="page auth-page">
+  <view class="auth-glow auth-glow-top"></view>
+  <view class="auth-glow auth-glow-bottom"></view>
+
+  <view class="auth-hero hero-card">
+    <view class="auth-badge">乐养社区</view>
+    <view class="hero-title">社区养老服务小程序</view>
+    <view class="hero-text">
+      一个统一连接老人、家属和服务人员的移动入口，围绕预约照护、健康记录、应急求助和消息协同展开。
+    </view>
+
+    <view class="auth-role-grid">
+      <view class="auth-role-card">
+        <view class="auth-role-icon">老</view>
+        <view class="auth-role-title">老人</view>
+        <view class="auth-role-desc">预约服务、记录健康、发起求助</view>
+      </view>
+      <view class="auth-role-card">
+        <view class="auth-role-icon">家</view>
+        <view class="auth-role-title">家属</view>
+        <view class="auth-role-desc">绑定老人、代为预约、同步消息</view>
+      </view>
+      <view class="auth-role-card">
+        <view class="auth-role-icon">服</view>
+        <view class="auth-role-title">服务人员</view>
+        <view class="auth-role-desc">查看工单、处理求助、反馈进展</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section panel auth-panel">
+    <view class="panel-title">账号登录</view>
+    <view class="panel-desc">登录成功后会自动进入对应角色的首页和工作台。</view>
+
+    <view class="form-grid auth-form-grid">
+      <view>
+        <text class="field-label">用户名</text>
+        <view class="auth-field-shell">
+          <view class="auth-field-icon">账</view>
+          <input
+            class="auth-field-input"
+            placeholder="请输入用户名"
+            value="{{form.username}}"
+            bindinput="onUsernameInput"
+          />
+        </view>
+      </view>
+
+      <view>
+        <text class="field-label">密码</text>
+        <view class="auth-field-shell">
+          <view class="auth-field-icon">密</view>
+          <input
+            class="auth-field-input"
+            password
+            placeholder="请输入登录密码"
+            value="{{form.password}}"
+            bindinput="onPasswordInput"
+          />
+        </view>
+      </view>
+    </view>
+
+    <view class="auth-tips">
+      <view class="auth-tip-item">已审核账号可直接进入业务流程</view>
+      <view class="auth-tip-item">待审核账号会提示联系管理员处理</view>
+    </view>
+
+    <view class="actions auth-actions">
+      <button class="button-primary auth-button-main" loading="{{submitting}}" bindtap="handleSubmit">登录</button>
+      <button class="button-ghost auth-button-sub" bindtap="goRegister">去注册</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,60 @@
+<view class="page">
+  <view class="hero-card">
+    <view class="hero-title">预约服务</view>
+    <view class="hero-text">选择服务项目、预约时间和地址，提交新的社区养老服务订单。</view>
+  </view>
+
+  <view class="section panel">
+    <view class="panel-title">填写预约信息</view>
+    <view class="form-grid">
+      <view wx:if="{{categories.length}}">
+        <text class="field-label">服务分类</text>
+        <picker mode="selector" range="{{categories}}" range-key="name" value="{{categoryIndex}}" bindchange="onCategoryChange">
+          <view class="picker-field">{{categories[categoryIndex].name}}</view>
+        </picker>
+      </view>
+
+      <view wx:if="{{items.length}}">
+        <text class="field-label">服务项目</text>
+        <picker mode="selector" range="{{items}}" range-key="name" value="{{itemIndex}}" bindchange="onItemChange">
+          <view class="picker-field">{{items[itemIndex].name}}</view>
+        </picker>
+      </view>
+
+      <view wx:if="{{currentUser.userType === 2}}">
+        <text class="field-label">绑定老人</text>
+        <picker mode="selector" range="{{bindings}}" range-key="elderlyName" value="{{bindingIndex}}" bindchange="onBindingChange">
+          <view class="picker-field">{{bindings.length ? bindings[bindingIndex].elderlyName : '暂无已确认绑定'}}</view>
+        </picker>
+      </view>
+
+      <view>
+        <text class="field-label">预约日期</text>
+        <picker mode="date" value="{{date}}" bindchange="onDateChange">
+          <view class="picker-field">{{date || '请选择日期'}}</view>
+        </picker>
+      </view>
+
+      <view>
+        <text class="field-label">预约时间</text>
+        <picker mode="time" value="{{time}}" bindchange="onTimeChange">
+          <view class="picker-field">{{time}}</view>
+        </picker>
+      </view>
+
+      <view>
+        <text class="field-label">服务地址</text>
+        <input class="field" data-field="serviceAddress" value="{{serviceAddress}}" bindinput="onFieldInput" placeholder="请输入服务地址" />
+      </view>
+
+      <view>
+        <text class="field-label">备注</text>
+        <textarea class="textarea" data-field="remark" value="{{remark}}" bindinput="onFieldInput" placeholder="可选：补充服务要求" />
+      </view>
+    </view>
+
+    <view class="actions">
+      <button class="button-primary" loading="{{submitting}}" bindtap="handleSubmit">提交预约</button>
+    </view>
+  </view>
+</view>

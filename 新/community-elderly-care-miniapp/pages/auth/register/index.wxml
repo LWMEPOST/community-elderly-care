@@ -1,0 +1,81 @@
+<view class="page register-page">
+  <view class="register-hero hero-card">
+    <view class="register-badge">新用户申请</view>
+    <view class="hero-title">提交基础资料后等待审核</view>
+    <view class="hero-text">
+      公开注册当前支持老人、家属和服务人员账号。资料提交后会进入管理员审核，审核通过后即可使用对应业务功能。
+    </view>
+    <view class="register-note-row">
+      <view class="register-note-chip">支持老人</view>
+      <view class="register-note-chip">支持家属</view>
+      <view class="register-note-chip">支持服务人员</view>
+      <view class="register-note-chip">审核后启用</view>
+    </view>
+  </view>
+
+  <view class="section panel register-panel">
+    <view class="panel-title">基础信息</view>
+    <view class="panel-desc">先完成必填信息，确保管理员能快速完成审核。</view>
+
+    <view class="form-grid register-form-grid">
+      <view>
+        <text class="field-label">注册角色</text>
+        <picker mode="selector" range="{{roleOptions}}" range-key="label" value="{{roleIndex}}" bindchange="onRoleChange">
+          <view class="picker-field">{{roleOptions[roleIndex].label}}</view>
+        </picker>
+      </view>
+
+      <view>
+        <text class="field-label">用户名</text>
+        <input class="field" data-field="username" placeholder="建议使用 4-50 位字母或数字" bindinput="onInput" value="{{form.username}}" />
+      </view>
+
+      <view>
+        <text class="field-label">密码</text>
+        <input class="field" password data-field="password" placeholder="请输入 6-32 位登录密码" bindinput="onInput" value="{{form.password}}" />
+      </view>
+
+      <view>
+        <text class="field-label">真实姓名</text>
+        <input class="field" data-field="realName" placeholder="请输入真实姓名" bindinput="onInput" value="{{form.realName}}" />
+      </view>
+
+      <view>
+        <text class="field-label">手机号</text>
+        <input class="field" type="number" data-field="phone" maxlength="11" placeholder="请输入手机号" bindinput="onInput" value="{{form.phone}}" />
+      </view>
+    </view>
+  </view>
+
+  <view class="section panel register-panel">
+    <view class="panel-title">补充信息</view>
+    <view class="panel-desc">这些信息可以帮助我们在紧急场景下更快联系到你和家人。</view>
+
+    <view class="form-grid register-form-grid">
+      <view>
+        <text class="field-label">地址</text>
+        <input class="field" data-field="address" placeholder="选填，例如：上海市浦东新区XX路XX号" bindinput="onInput" value="{{form.address}}" />
+      </view>
+
+      <view>
+        <text class="field-label">紧急联系人</text>
+        <input class="field" data-field="emergencyContact" placeholder="选填，建议填写近亲属姓名" bindinput="onInput" value="{{form.emergencyContact}}" />
+      </view>
+
+      <view>
+        <text class="field-label">紧急联系电话</text>
+        <input class="field" type="number" data-field="emergencyPhone" maxlength="11" placeholder="选填，建议填写常用联系电话" bindinput="onInput" value="{{form.emergencyPhone}}" />
+      </view>
+    </view>
+
+    <view class="register-hint-card">
+      <view class="register-hint-title">提交前请确认</view>
+      <view class="register-hint-text">手机号和姓名需要真实可用，审核通过后才能进入正式业务流程。</view>
+    </view>
+
+    <view class="actions register-actions">
+      <button class="button-primary register-submit" loading="{{submitting}}" bindtap="handleSubmit">提交注册</button>
+      <button class="button-ghost register-back" bindtap="goLogin">返回登录</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,121 @@
+<view class="page">
+  <view class="hero-card home-hero">
+    <view class="home-hero-badge">乐养社区</view>
+    <view class="hero-title">你好，{{currentUser.realName || currentUser.username}}</view>
+    <view class="hero-text">
+      当前身份：{{roleLabel}}。这里会根据你的角色展示社区养老服务的快捷入口和待办摘要。
+    </view>
+    <view class="home-hero-note">
+      <view class="home-note-chip">消息 {{unreadSummary.totalUnreadCount || 0}}</view>
+      <view class="home-note-chip">服务 {{serviceOrders.length}}</view>
+      <view class="home-note-chip">求助 {{emergencyList.length}}</view>
+    </view>
+  </view>
+
+  <view class="stats-grid">
+    <view class="stat-card">
+      <text class="stat-label">未读消息</text>
+      <text class="stat-value">{{unreadSummary.totalUnreadCount || 0}}</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-label">最近服务</text>
+      <text class="stat-value">{{serviceOrders.length}}</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-label">求助进展</text>
+      <text class="stat-value">{{emergencyList.length}}</text>
+    </view>
+    <view class="stat-card" wx:if="{{healthSummary}}">
+      <text class="stat-label">健康异常</text>
+      <text class="stat-value">{{healthSummary.abnormalCount || 0}}</text>
+    </view>
+  </view>
+
+  <view class="section panel">
+    <view class="panel-title">快捷入口</view>
+    <view class="panel-desc">根据当前角色展示最常用的操作路径，点一下就能直达。</view>
+    <view class="home-action-grid">
+      <view
+        class="home-action-card home-action-card-{{item.tone}}"
+        wx:for="{{actions}}"
+        wx:key="label"
+        data-url="{{item.url}}"
+        bindtap="openAction"
+      >
+        <view class="home-action-icon">{{item.icon}}</view>
+        <view class="home-action-title">{{item.label}}</view>
+        <view class="home-action-desc">{{item.desc}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section panel" wx:if="{{bindings.length}}">
+    <view class="panel-title">已确认绑定</view>
+    <view class="card-list">
+      <view class="list-card" wx:for="{{bindings}}" wx:key="id">
+        <view class="list-title">{{item.elderlyName || '老人用户'}} 与 {{item.familyName || '家属用户'}}</view>
+        <view class="list-meta">关系：{{item.relation}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{bindingHint}}" class="section panel">
+    <view class="panel-title">健康摘要提示</view>
+    <view class="panel-desc">{{bindingHint}}</view>
+  </view>
+
+  <view class="section panel">
+    <view class="row-between">
+      <view>
+        <view class="panel-title">最新资讯</view>
+        <view class="panel-desc">查看平台发布的政策、活动和通知。</view>
+      </view>
+      <button class="button-ghost" bindtap="openAction" data-url="/pages/info/list/index">更多资讯</button>
+    </view>
+    <view class="card-list">
+      <view
+        class="list-card"
+        wx:for="{{latestInfo}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="openInfoDetail"
+      >
+        <view class="list-top">
+          <view class="list-title">{{item.title}}</view>
+          <view class="list-tag">{{item.infoTypeText}}</view>
+        </view>
+        <view class="list-meta">{{item.infoTypeText}} · {{item.publishTimeText}}</view>
+        <view class="list-meta">{{item.contentSummary}}</view>
+      </view>
+      <view wx:if="{{!latestInfo.length}}" class="empty">暂无资讯内容</view>
+    </view>
+  </view>
+
+  <view class="section panel">
+    <view class="panel-title">服务动态</view>
+    <view class="card-list">
+      <view class="list-card" wx:for="{{serviceOrders}}" wx:key="id">
+        <view class="list-top">
+          <view class="list-title">{{item.serviceItemName || '服务订单'}}</view>
+          <view class="list-tag">{{item.statusLabel}}</view>
+        </view>
+        <view class="list-meta">{{item.elderlyName || '--'}} · {{item.appointmentText}}</view>
+      </view>
+      <view wx:if="{{!serviceOrders.length}}" class="empty">暂无服务订单记录</view>
+    </view>
+  </view>
+
+  <view class="section panel">
+    <view class="panel-title">求助进展</view>
+    <view class="card-list">
+      <view class="list-card" wx:for="{{emergencyList}}" wx:key="id">
+        <view class="list-top">
+          <view class="list-title">{{item.helpTypeText}}</view>
+          <view class="list-tag">{{item.statusLabel}}</view>
+        </view>
+        <view class="list-meta">{{item.elderlyName || '--'}} · {{item.createTimeText}}</view>
+      </view>
+      <view wx:if="{{!emergencyList.length}}" class="empty">暂无求助记录</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: community-elderly-care
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL:jdbc:mysql://localhost:3306/elderlycare?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    hikari:
+      maximum-pool-size: ${DB_POOL_MAX_SIZE:10}
+      minimum-idle: ${DB_POOL_MIN_IDLE:2}
+      connection-timeout: ${DB_CONNECTION_TIMEOUT_MS:30000}
+      validation-timeout: ${DB_VALIDATION_TIMEOUT_MS:5000}
+      initialization-fail-timeout: ${DB_INIT_FAIL_TIMEOUT_MS:10000}
+
+mybatis-plus:
+  type-aliases-package: com.elderlycare.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+app:
+  auth:
+    issuer: ${AUTH_TOKEN_ISSUER:community-elderly-care}
+    secret: ${AUTH_JWT_SECRET:community-elderly-care-dev-secret-key-please-change-2026}
+    expire-minutes: ${AUTH_TOKEN_EXPIRE_MINUTES:720}
+    bootstrap-admin:
+      enabled: ${AUTH_BOOTSTRAP_ADMIN_ENABLED:true}
+      sync-password-on-startup: ${AUTH_BOOTSTRAP_ADMIN_SYNC_PASSWORD:true}
+      username: ${AUTH_BOOTSTRAP_ADMIN_USERNAME:admin}
+      password: ${AUTH_BOOTSTRAP_ADMIN_PASSWORD:admin123}
+      real-name: ${AUTH_BOOTSTRAP_ADMIN_REAL_NAME:系统管理员}
+      phone: ${AUTH_BOOTSTRAP_ADMIN_PHONE:13800000000}
+  database:
+    health-query: ${DB_HEALTH_QUERY:SELECT 1}
+    init:
+      enabled: ${DB_INIT_ENABLED:true}
+      run-on-startup: ${DB_INIT_RUN_ON_STARTUP:true}
+      fail-on-error: ${DB_INIT_FAIL_ON_ERROR:true}
+      script-location: ${DB_INIT_SCRIPT:classpath:db/init/schema-mysql.sql}

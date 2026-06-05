@@ -1,0 +1,62 @@
+<view class="page">
+  <view class="hero-card">
+    <view class="hero-title">新增健康记录</view>
+    <view class="hero-text">根据记录类型录入血压、血糖或心率数据，便于后续预警分析。</view>
+  </view>
+
+  <view class="section panel">
+    <view class="form-grid">
+      <view>
+        <text class="field-label">记录类型</text>
+        <picker mode="selector" range="{{recordTypes}}" range-key="label" value="{{recordTypeIndex}}" bindchange="onRecordTypeChange">
+          <view class="picker-field">{{recordTypes[recordTypeIndex].label}}</view>
+        </picker>
+      </view>
+
+      <view wx:if="{{currentUser.userType === 2}}">
+        <text class="field-label">绑定老人</text>
+        <picker mode="selector" range="{{bindings}}" range-key="elderlyName" value="{{bindingIndex}}" bindchange="onBindingChange">
+          <view class="picker-field">{{bindings.length ? bindings[bindingIndex].elderlyName : '暂无已确认绑定'}}</view>
+        </picker>
+      </view>
+
+      <view>
+        <text class="field-label">记录日期</text>
+        <picker mode="date" value="{{date}}" bindchange="onDateChange">
+          <view class="picker-field">{{date}}</view>
+        </picker>
+      </view>
+
+      <view>
+        <text class="field-label">记录时间</text>
+        <picker mode="time" value="{{time}}" bindchange="onTimeChange">
+          <view class="picker-field">{{time}}</view>
+        </picker>
+      </view>
+
+      <view wx:if="{{recordTypes[recordTypeIndex].value === 1}}">
+        <text class="field-label">收缩压</text>
+        <input class="field" type="number" data-field="systolicPressure" value="{{systolicPressure}}" bindinput="onFieldInput" />
+      </view>
+
+      <view wx:if="{{recordTypes[recordTypeIndex].value === 1}}">
+        <text class="field-label">舒张压</text>
+        <input class="field" type="number" data-field="diastolicPressure" value="{{diastolicPressure}}" bindinput="onFieldInput" />
+      </view>
+
+      <view wx:if="{{recordTypes[recordTypeIndex].value === 2}}">
+        <text class="field-label">血糖值</text>
+        <input class="field" type="digit" data-field="bloodSugar" value="{{bloodSugar}}" bindinput="onFieldInput" />
+      </view>
+
+      <view wx:if="{{recordTypes[recordTypeIndex].value === 3}}">
+        <text class="field-label">心率</text>
+        <input class="field" type="number" data-field="heartRate" value="{{heartRate}}" bindinput="onFieldInput" />
+      </view>
+    </view>
+
+    <view class="actions">
+      <button class="button-primary" loading="{{submitting}}" bindtap="handleSubmit">保存记录</button>
+    </view>
+  </view>
+</view>

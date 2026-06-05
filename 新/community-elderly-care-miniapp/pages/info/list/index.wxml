@@ -1,0 +1,37 @@
+<view class="page">
+  <view class="hero-card">
+    <view class="hero-title">资讯中心</view>
+    <view class="hero-text">查看已发布的政策、活动、通知和社区动态。</view>
+  </view>
+
+  <view class="section panel">
+    <view class="panel-title">筛选资讯</view>
+    <view class="form-grid">
+      <input class="field" placeholder="输入标题或关键字" value="{{keyword}}" bindinput="onKeywordInput" />
+      <button class="button-primary" loading="{{loading}}" bindtap="loadList">搜索</button>
+    </view>
+    <view class="tabs">
+      <view
+        wx:for="{{infoTypes}}"
+        wx:key="value"
+        class="tab {{currentType === item.value ? 'tab-active' : ''}}"
+        data-type="{{item.value}}"
+        bindtap="changeType"
+      >
+        {{item.label}}
+      </view>
+    </view>
+  </view>
+
+  <view class="section panel">
+    <view class="panel-title">资讯列表</view>
+    <view class="card-list">
+      <view class="list-card" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="openDetail">
+        <view class="list-title">{{item.title}}</view>
+        <view class="list-meta">{{item.typeLabel}} · {{item.publishTimeText}}</view>
+        <view class="list-meta">{{item.contentSummary}}</view>
+      </view>
+      <view wx:if="{{!list.length}}" class="empty">暂无符合条件的资讯</view>
+    </view>
+  </view>
+</view>

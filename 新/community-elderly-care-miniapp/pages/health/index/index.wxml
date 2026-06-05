@@ -1,0 +1,91 @@
+<view class="page">
+  <view class="hero-card">
+    <view class="hero-title">{{currentUser.userType === 4 ? '工单工作台' : '健康记录'}}</view>
+    <view class="hero-text">
+      当前身份：{{roleLabel}}。{{currentUser.userType === 4 ? '这里聚合你需要处理的服务与求助任务。' : '查看健康记录、预警数据和最新健康摘要。'}}
+    </view>
+  </view>
+
+  <view wx:if="{{currentUser.userType !== 4}}" class="section panel">
+    <view class="row-between">
+      <view>
+        <view class="panel-title">健康概览</view>
+        <view class="panel-desc">查看老人健康记录和预警情况。</view>
+      </view>
+      <button class="button-primary" bindtap="openCreate">新增记录</button>
+    </view>
+
+    <view wx:if="{{bindings.length}}" class="section">
+      <text class="field-label">查看对象</text>
+      <picker mode="selector" range="{{bindings}}" range-key="elderlyName" value="{{targetBindingIndex}}" bindchange="onBindingChange">
+        <view class="picker-field">{{bindings[targetBindingIndex].elderlyName}}</view>
+      </picker>
+    </view>
+
+    <view wx:if="{{bindingHint}}" class="empty">{{bindingHint}}</view>
+
+    <view class="stats-grid">
+      <view class="stat-card">
+        <text class="stat-label">记录总数</text>
+        <text class="stat-value">{{summary.totalRecords || 0}}</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-label">异常记录</text>
+        <text class="stat-value">{{summary.abnormalCount || 0}}</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-label">低风险预警</text>
+        <text class="stat-value">{{summary.lowWarningCount || 0}}</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-label">高风险预警</text>
+        <text class="stat-value">{{summary.highWarningCount || 0}}</text>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="panel-title">预警记录</view>
+      <view class="card-list">
+        <view wx:for="{{warnings}}" wx:key="id" class="list-card">
+          <view class="list-title">{{item.recordTypeLabel}} · {{item.warningLabel}}</view>
+          <view class="list-meta">{{item.metricText}} · {{item.recordTimeText}}</view>
+          <view class="list-meta">{{item.advice || '暂无建议'}}</view>
+        </view>
+        <view wx:if="{{!warnings.length}}" class="empty">暂无预警记录</view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="panel-title">最近记录</view>
+      <view class="card-list">
+        <view wx:for="{{records}}" wx:key="id" class="list-card">
+          <view class="list-title">{{item.recordTypeLabel}} · {{item.metricText}}</view>
+          <view class="list-meta">{{item.warningLabel}} · {{item.recordTimeText}}</view>
+        </view>
+        <view wx:if="{{!records.length}}" class="empty">暂无健康记录</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{currentUser.userType === 4}}" class="section panel">
+    <view class="panel-title">待处理服务工单</view>
+    <view class="card-list">
+      <view wx:for="{{workerOrders}}" wx:key="id" class="list-card">
+        <view class="list-title">{{item.serviceItemName || '服务订单'}} · {{item.statusLabel}}</view>
+        <view class="list-meta">{{item.elderlyName || '--'}} · {{item.appointmentText}}</view>
+      </view>
+      <view wx:if="{{!workerOrders.length}}" class="empty">暂无工单</view>
+    </view>
+  </view>
+
+  <view wx:if="{{currentUser.userType === 4}}" class="section panel">
+    <view class="panel-title">待处理求助</view>
+    <view class="card-list">
+      <view wx:for="{{workerEmergency}}" wx:key="id" class="list-card">
+        <view class="list-title">{{item.helpTypeText}} · {{item.statusLabel}}</view>
+        <view class="list-meta">{{item.elderlyName || '--'}} · {{item.createTimeText}}</view>
+      </view>
+      <view wx:if="{{!workerEmergency.length}}" class="empty">暂无求助任务</view>
+    </view>
+  </view>
+</view>
